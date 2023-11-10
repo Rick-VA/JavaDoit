@@ -24,9 +24,9 @@ public class GetTodoController {
             while (result.next()) {
 
                 if (Objects.equals(result.getString("done"), "t")) {
-                    todo.add("✔️ " + result.getString("todo"));
+                    todo.add("✔️ | " + result.getString("todo"));
                 } else {
-                    todo.add("❌ " + result.getString("todo"));
+                    todo.add("❌ | " + result.getString("todo"));
                 }
                 connection.close();
             }

@@ -32,7 +32,12 @@ public class TodoView extends JFrame {
                     int index = todoList.locationToIndex(e.getPoint());
                     if (index >=0) {
                         String selectedItem = listModel.getElementAt(index);
-                        new EditTodoController(selectedItem, listModel, todoList);
+
+                        int pipeIndex = selectedItem.indexOf("|");
+                        String doneItem = selectedItem.substring(0, pipeIndex -1).trim();
+                        selectedItem =  selectedItem.substring(pipeIndex + 1).trim();
+
+                        new EditTodoController(selectedItem, listModel, todoList, doneItem);
                     }
                 }
             }
@@ -65,7 +70,7 @@ public class TodoView extends JFrame {
     public void addTodo() {
         String newTodo = todoInputField.getText();
         if (!newTodo.isEmpty()) {
-            listModel.addElement("❌ " + newTodo);
+            listModel.addElement("❌ | " + newTodo);
 
             new AddTodoController(newTodo);
 

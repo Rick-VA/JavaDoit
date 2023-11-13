@@ -6,8 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class TodoView extends JFrame {
-    private JList<String> todoList;
-    private DefaultListModel<String> listModel;
+    public JPanel todoPanel;
     private JTextField todoInputField;
 
     public TodoView() {
@@ -15,38 +14,21 @@ public class TodoView extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500,500);
 
-        listModel = new DefaultListModel<>();
+        todoPanel = new JPanel();
+        todoPanel.setLayout(new BoxLayout(todoPanel, BoxLayout.Y_AXIS));
 
         GetTodoController database = new GetTodoController();
 
 
         for (String items: database.todo) {
-            listModel.addElement(items);
+            addTodoPanel(items);
         }
 
-        todoList = new JList<>(listModel);
-
-        todoList.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 1) {
-                    int index = todoList.locationToIndex(e.getPoint());
-                    if (index >=0) {
-                        String selectedItem = listModel.getElementAt(index);
-
-                        int pipeIndex = selectedItem.indexOf("|");
-                        String doneItem = selectedItem.substring(0, pipeIndex -1).trim();
-                        selectedItem =  selectedItem.substring(pipeIndex + 1).trim();
-
-                        new EditTodoController(selectedItem, listModel, todoList, doneItem);
-                    }
-                }
-            }
-        });
+        JScrollPane scrollPane = new JScrollPane(todoPanel);
 
         todoInputField = new JTextField(20);
 
         JButton addButton = new JButton("Add todo");
-
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -55,8 +37,6 @@ public class TodoView extends JFrame {
         });
 
         setLayout(new BorderLayout());
-
-        JScrollPane scrollPane = new JScrollPane(todoList);
         add(scrollPane, BorderLayout.CENTER);
         add(todoInputField, BorderLayout.NORTH);
 
@@ -65,12 +45,23 @@ public class TodoView extends JFrame {
         add(buttonPanel, BorderLayout.SOUTH);
 
         setVisible(true);
+
+    }
+
+    public void addTodoPanel(String todoItem) {
+        todoPanel.add(new TodoItem(todoItem));
+        todoPanel.revalidate();
+        todoPanel.repaint();
+    }
+
+    public void editTodoPanel(String todoItem) {
+        System.out.println(todoItem);
     }
 
     public void addTodo() {
         String newTodo = todoInputField.getText();
         if (!newTodo.isEmpty()) {
-            listModel.addElement("❌ | " + newTodo);
+            addTodoPanel("❌ | " + newTodo);
 
             new AddTodoController(newTodo);
 

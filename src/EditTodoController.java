@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
 public class EditTodoController {
-    public EditTodoController(String todoItem, DefaultListModel<String> listModel, JList<String> todoList, String doneItem) {
+    public EditTodoController(String todoItem, JLabel label, String doneItem) {
         JFrame editFrame = new JFrame("Edit todo");
         editFrame.setSize(300, 150);
 
@@ -51,9 +51,9 @@ public class EditTodoController {
 
 
                 if (doneCheckBox.isSelected()) {
-                    listModel.setElementAt("✔️ | " + editedTodo, todoList.getSelectedIndex());
+                    label.setText("✔️ | " + editedTodo);
                 } else {
-                    listModel.setElementAt("❌ | " + editedTodo, todoList.getSelectedIndex());
+                    label.setText("❌ | " + editedTodo);
                 }
 
                 editFrame.dispose();
@@ -81,7 +81,7 @@ public class EditTodoController {
                     exception.printStackTrace();
                 }
 
-                listModel.remove(todoList.getSelectedIndex());
+                label.remove(label);
 
                 editFrame.dispose();
             }

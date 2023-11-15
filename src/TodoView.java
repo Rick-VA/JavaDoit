@@ -2,12 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TodoView extends JFrame {
     public JPanel todoPanel;
     private JTextField todoInputField;
+    private DatabaseController database;
 
     public TodoView() {
         super("todo");
@@ -17,11 +18,11 @@ public class TodoView extends JFrame {
         todoPanel = new JPanel();
         todoPanel.setLayout(new BoxLayout(todoPanel, BoxLayout.Y_AXIS));
 
-        GetTodoController database = new GetTodoController();
+        database = new DatabaseController();
 
 
         for (String items: database.todo) {
-            addTodoPanel(items);
+            addTodoPanel(items, database.id.get(database.todo.indexOf(items)));
         }
 
         JScrollPane scrollPane = new JScrollPane(todoPanel);
@@ -36,36 +37,67 @@ public class TodoView extends JFrame {
             }
         });
 
+        JButton deleteButton = new JButton("Delete selected todo");
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteSelectedItems();
+            }
+        });
+
         setLayout(new BorderLayout());
         add(scrollPane, BorderLayout.CENTER);
         add(todoInputField, BorderLayout.NORTH);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(addButton);
+        buttonPanel.add(deleteButton);
         add(buttonPanel, BorderLayout.SOUTH);
 
         setVisible(true);
 
     }
 
-    public void addTodoPanel(String todoItem) {
-        todoPanel.add(new TodoItem(todoItem));
+    public void addTodoPanel(String todoItem, Integer id) {
+        todoPanel.add(new TodoItem(todoItem, id));
         todoPanel.revalidate();
         todoPanel.repaint();
-    }
-
-    public void editTodoPanel(String todoItem) {
-        System.out.println(todoItem);
     }
 
     public void addTodo() {
         String newTodo = todoInputField.getText();
         if (!newTodo.isEmpty()) {
-            addTodoPanel("❌ | " + newTodo);
-
+            addTodoPanel("❌ | " + newTodo, database.id.get(database.todo.size() - 1) + 1);
             new AddTodoController(newTodo);
-
             todoInputField.setText("");
         }
+    }
+
+    private void deleteSelectedItems() {
+        List<TodoItem> selectedItems = getSelectedItems();
+        for (TodoItem selectedItem : selectedItems) {
+            todoPanel.remove(selectedItem);
+            database.removeTodoItem(selectedItem.getTodoText());
+        }
+        revalidateAndRepaint();
+    }
+
+    private List<TodoItem> getSelectedItems() {
+        List<TodoItem> selectedItems = new ArrayList<>();
+        for (Component component : todoPanel.getComponents()) {
+            if (component instanceof TodoItem) {
+                TodoItem todoItem = (TodoItem) component;
+                if (todoItem.isSelected()) {
+                    selectedItems.add(todoItem);
+                    System.out.println(todoItem.getCheckbox());
+                }
+            }
+        }
+        return selectedItems;
+    }
+
+    private void revalidateAndRepaint() {
+        todoPanel.revalidate();
+        todoPanel.repaint();
     }
 }

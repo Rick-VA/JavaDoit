@@ -52,10 +52,10 @@
             <mxPoint x="555" y="460" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="YN9UBvXL3TSdzrhMbm_a-8" value="GetTodoController" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="YN9UBvXL3TSdzrhMbm_a-8" value="DatabaseController" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="555" y="440" width="170" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="YN9UBvXL3TSdzrhMbm_a-9" value="+ GetTodoController()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="YN9UBvXL3TSdzrhMbm_a-8" vertex="1">
+        <mxCell id="YN9UBvXL3TSdzrhMbm_a-9" value="+ DatabaseController()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="YN9UBvXL3TSdzrhMbm_a-8" vertex="1">
           <mxGeometry y="30" width="170" height="30" as="geometry" />
         </mxCell>
         <mxCell id="YN9UBvXL3TSdzrhMbm_a-10" value="+ toDo() ; ArrayList&amp;lt;String&amp;gt;&amp;nbsp;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="YN9UBvXL3TSdzrhMbm_a-8" vertex="1">

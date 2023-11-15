@@ -3,14 +3,19 @@ import java.awt.*;
 
 public class TodoItem extends JPanel {
     private String doneItem;
+    private JLabel label;
+    private Checkbox checkbox;
 
-    public TodoItem(String todoItem) {
+    public TodoItem(String todoItem, int id) {
         setBackground(Color.yellow);
         setBorder(BorderFactory.createLineBorder(Color.black));
 
-        add(new Checkbox());
+        checkbox = new Checkbox();
 
-        JLabel label = new JLabel(todoItem);
+        checkbox.setName(String.valueOf(id));
+        add(checkbox);
+
+        label = new JLabel(todoItem);
         add(label);
 
         String[]  todoItems = todoItem.split(" | ");
@@ -21,17 +26,28 @@ public class TodoItem extends JPanel {
             doneItem = "❌";
         }
 
-
-        String todoItem1 = todoItems[2];
-
         JButton editButton = new JButton("Edit");
         add(editButton);
 
         editButton.addActionListener(e -> {
-            new EditTodoController(todoItem1, label, doneItem);
+            new EditTodoController(getTodoText(),this);
         });
 
         setVisible(true);
+    }
+
+    public String getTodoText() {
+        return label.getText();
+    }
+
+    public boolean isSelected() {
+        return checkbox.getState();
+    }
+    public String getCheckbox() {
+        return checkbox.getName();
+    }
+    public void setLabel(String todoItem) {
+        label.setText(todoItem);
     }
 
 }

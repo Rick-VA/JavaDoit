@@ -40,24 +40,19 @@ public class DatabaseController {
         }
     }
 
-    public ArrayList<String> toDo()  {
-        return todo;
-    }
-
-
-    public void removeTodoItem(String todoText) {
-        String sql = "DELETE FROM todos WHERE todo = ?";
+    public void removeTodoItem(String todoText, String todoId) {
+        String sql = "DELETE FROM todos WHERE id = ?";
         String url = "jdbc:postgresql://localhost:5432/javadoit";
         String username = "postgres";
         String password = "password";
 
-        String[] todoItems = todoText.split(" | ");
+        int id = Integer.parseInt(todoId);
+        System.out.println(id);
 
         try(Connection connection = DriverManager.getConnection(url, username, password)) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-
-            preparedStatement.setString(1, todoItems[2]);
+            preparedStatement.setInt(1, id);
 
             preparedStatement.executeUpdate();
             System.out.println("Executing SQL query: " + preparedStatement);

@@ -1,11 +1,9 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class AddTodoController {
+    public int id;
     public AddTodoController(String newTodo) {
-        String sql = "INSERT INTO todos (todo) VALUES (?)";
+        String sql = "INSERT INTO todos (todo) VALUES (?) RETURNING id";
         String url = "jdbc:postgresql://localhost:5432/javadoit";
         String username = "postgres";
         String password = "password";
@@ -18,7 +16,17 @@ public class AddTodoController {
             preparedStatement.setString(1, newTodo);
 
             // Execute the query to insert the newTodo value into the database
-            preparedStatement.executeUpdate();
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                id = resultSet.getInt("id");
+                System.out.println("Genarated id: " + id);
+
+//                new TodoView().addTodoPanel("❌ | " + newTodo, id);
+            }
+
+
+
 
             // Close the prepared statement and the database connection
             preparedStatement.close();

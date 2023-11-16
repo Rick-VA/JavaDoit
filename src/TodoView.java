@@ -67,8 +67,7 @@ public class TodoView extends JFrame {
     public void addTodo() {
         String newTodo = todoInputField.getText();
         if (!newTodo.isEmpty()) {
-            addTodoPanel("❌ | " + newTodo, database.id.get(database.todo.size() - 1) + 1);
-            new AddTodoController(newTodo);
+            addTodoPanel("❌ | " + newTodo, new AddTodoController(newTodo).id);
             todoInputField.setText("");
         }
     }
@@ -77,7 +76,7 @@ public class TodoView extends JFrame {
         List<TodoItem> selectedItems = getSelectedItems();
         for (TodoItem selectedItem : selectedItems) {
             todoPanel.remove(selectedItem);
-            database.removeTodoItem(selectedItem.getTodoText());
+            database.removeTodoItem(selectedItem.getTodoText(), selectedItem.getCheckbox());
         }
         revalidateAndRepaint();
     }

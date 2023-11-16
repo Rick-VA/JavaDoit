@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 
 public class DatabaseController {
@@ -96,5 +98,9 @@ public class DatabaseController {
 
         todo.remove(todoText);
         todo.add(doneItem + " | " + editedTodo);
+    }
+
+    public void sortTodoList() {
+        Collections.sort(todo);
     }
 }

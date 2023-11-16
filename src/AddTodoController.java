@@ -21,8 +21,6 @@ public class AddTodoController {
             if (resultSet.next()) {
                 id = resultSet.getInt("id");
                 System.out.println("Genarated id: " + id);
-
-//                new TodoView().addTodoPanel("❌ | " + newTodo, id);
             }
 
 

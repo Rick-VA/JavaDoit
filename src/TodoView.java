@@ -45,17 +45,41 @@ public class TodoView extends JFrame {
             }
         });
 
+        JButton sortButton = new JButton("Sort");
+        sortButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sortTodoItems();
+            }
+        });
+
+
+
         setLayout(new BorderLayout());
         add(scrollPane, BorderLayout.CENTER);
         add(todoInputField, BorderLayout.NORTH);
 
         JPanel buttonPanel = new JPanel();
+        buttonPanel.add(sortButton);
         buttonPanel.add(addButton);
         buttonPanel.add(deleteButton);
         add(buttonPanel, BorderLayout.SOUTH);
 
         setVisible(true);
 
+    }
+
+    private void sortTodoItems() {
+        database.sortTodoList();
+        updateUI();
+    }
+
+    private void updateUI() {
+        todoPanel.removeAll();
+        for (String items: database.todo) {
+            addTodoPanel(items, database.id.get(database.todo.indexOf(items)));
+        }
+        revalidateAndRepaint();
     }
 
     public void addTodoPanel(String todoItem, Integer id) {
